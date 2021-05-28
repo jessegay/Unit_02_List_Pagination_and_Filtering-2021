@@ -16,7 +16,7 @@ For assistance:
 
 
 const itemsPerPage = 10;
-list = data; // Is this it? doesn't feel right 
+const list = data; // Is this it? doesn't feel right. Why don't we just refer to data? 
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -30,6 +30,7 @@ const showPage = (list, page) => {
    for (let i = 0; i < list.length; i ++) {
       if (i >= startIndex && i < endIndex) {
          //list[i].style.display = '';
+         console.log(list[i].name.first);
       } else {
          //list.style.display = 'none';
       }
@@ -44,3 +45,4 @@ This function will create and insert/append the elements needed for the paginati
 
 
 // Call functions
+showPage(list,2);
