@@ -15,7 +15,7 @@ For assistance:
 // Global variables.??
 
 
-const itemsPerPage = 10;
+const itemsPerPage = 9; // we want 9. FIXME: this might be specified elsewhere.
 // const list = data; 
 /* Is this it? doesn't feel right. Why don't we just refer to data? Should this be global, or inside showPage()? Wait, maybe I don't 
 need to even do this. I'll just pass in data when I call the function */
@@ -31,21 +31,18 @@ const showPage = (list, page) => {
    studentList.innerHTML = '';
    for (let i = 0; i < list.length; i ++) {
       if (i >= startIndex && i < endIndex) {
-         //console.log(list[i].name.first);
          let studentInfo = `<li class="student-item cf">
          <div class="student-details">
-           <img class="avatar" src="https://randomuser.me/api/portraits/women/25.jpg" alt="Profile Picture">
+           <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">
            <h3>${list[i].name.first} ${list[i].name.last}</h3>
            <span class="email">${list[i].email}</span>
          </div>
          <div class="joined-details">
            <span class="date">Joined ${list[i].registered.date}</span>
          </div>
-       </li>`
-       console.log(studentInfo);
-      } else {
-         //list.style.display = 'none';
-      }
+       </li>`;
+       studentList.insertAdjacentHTML("beforeend", studentInfo);
+      } 
    }
 }
 
@@ -53,8 +50,41 @@ const showPage = (list, page) => {
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
-
-
+const addPaginationButtons = (list) => {
+   const buttonsNeeded = Math.ceil(list.length/itemsPerPage);
+   let linkList = document.querySelector('.link-list');
+   linkList.innerHTML = '';
+   for (let i = 0; i < buttonsNeeded; i++) {
+      let buttonsList = `<li>
+      <button type="button">${i+1}</button>
+      </li>`;
+      linkList.insertAdjacentHTML("beforeend", buttonsList);
+   }
+   // add 'active' class to first li item
+   // let selectedLink = document.querySelector('.link-list li');
+   // console.log(selectedLink);
+   // selectedLink.classList.add('active');
+   linkList.getElementsByTagName('li')[0].classList.add('active');
+   // add event listener to all li items. I'm trying to use event delegation, rather than doing each one individually.
+   linkList.addEventListener("click", event => {
+      showPage(list, event.target.textContent);
+      // Remove the active class from any other pagination button. Let's try 'for of'
+      let paginationButtons = linkList.getElementsByTagName('li');
+      //console.log(paginationButtons);
+      // for (const paginationButton of paginationButtons) {
+      //    paginationButton.classList.remove('active');
+      // }
+      // Hmmm, not working. Try traditional for loop.
+      for (let i = 0; i < paginationButtons.length; i++) {
+         paginationButtons[i].classList.remove('active');
+         
+      }
+      // Not working either.
+      // Add the active class to the pagination button that was just clicked. :FIXME need to remove active class from others
+      event.target.classList.add('active');
+   });
+}
 
 // Call functions
 showPage(data,2);
+addPaginationButtons(data);
