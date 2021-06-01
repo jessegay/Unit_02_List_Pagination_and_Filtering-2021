@@ -60,16 +60,16 @@ const addPaginationButtons = (list) => {
       </li>`;
       linkList.insertAdjacentHTML("beforeend", buttonsList);
    }
-   // add 'active' class to first li item
+   // add 'active' class to first li item //duh, active class should be added to BUTTONS, not li
    // let selectedLink = document.querySelector('.link-list li');
    // console.log(selectedLink);
    // selectedLink.classList.add('active');
-   linkList.getElementsByTagName('li')[0].classList.add('active');
+   linkList.getElementsByTagName('button')[0].classList.add('active');
    // add event listener to all li items. I'm trying to use event delegation, rather than doing each one individually.
    linkList.addEventListener("click", event => {
       showPage(list, event.target.textContent);
       // Remove the active class from any other pagination button. Let's try 'for of'
-      let paginationButtons = linkList.getElementsByTagName('li');
+      let paginationButtons = linkList.getElementsByTagName('button');
       //console.log(paginationButtons);
       // for (const paginationButton of paginationButtons) {
       //    paginationButton.classList.remove('active');
