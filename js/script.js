@@ -55,10 +55,10 @@ const addPaginationButtons = (list) => {
    let linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
    for (let i = 0; i < buttonsNeeded; i++) {
-      let buttonsList = `<li>
+      let buttonsListItem = `<li>
       <button type="button">${i+1}</button>
       </li>`;
-      linkList.insertAdjacentHTML("beforeend", buttonsList);
+      linkList.insertAdjacentHTML("beforeend", buttonsListItem);
    }
    // add 'active' class to first li item //duh, active class should be added to BUTTONS, not li
    // let selectedLink = document.querySelector('.link-list li');
