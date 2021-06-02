@@ -4,24 +4,15 @@ FSJS Project 2 - Data Pagination and Filtering (Refresh 2021)
 by Jesse Gay
 */
 
-
+// Global variables
+const itemsPerPage = 9; 
+/* Number of students displayed per page. I used a const so I can easily change 
+this with one edit.*/
 
 /*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-// Global variables.??
-
-
-const itemsPerPage = 9; // we want 9. FIXME: this might be specified elsewhere.
-// const list = data; 
-/* Is this it? doesn't feel right. Why don't we just refer to data? Should this be global, or inside showPage()? Wait, maybe I don't 
-need to even do this. I'll just pass in data when I call the function */
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
+`showPage` function
+This function will show a page of students selected from the list in the data.js file.
+The number of students per page is defined in on line in itemsPerPage.
 */
 
 const showPage = (list, page) => {
@@ -47,8 +38,9 @@ const showPage = (list, page) => {
 }
 
 /*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+`addPaginationButtons` function
+dynamically creates the pagination buttons at 
+the bottom of the screen based on the number of students in 'list'.
 */
 const addPaginationButtons = (list) => {
    const buttonsNeeded = Math.ceil(list.length/itemsPerPage);
@@ -60,31 +52,27 @@ const addPaginationButtons = (list) => {
       </li>`;
       linkList.insertAdjacentHTML("beforeend", buttonsListItem);
    }
-   // add 'active' class to first li item //duh, active class should be added to BUTTONS, not li
-   // let selectedLink = document.querySelector('.link-list li');
-   // console.log(selectedLink);
-   // selectedLink.classList.add('active');
+   // Add 'active' class to first button to show it is selected upon inital load.
    linkList.getElementsByTagName('button')[0].classList.add('active');
-   // add event listener to all li items. I'm trying to use event delegation, rather than doing each one individually.
+   
+   // Add event listener to all pagination buttons. I'm using event delegation, rather than doing each one individually.
    linkList.addEventListener("click", event => {
       showPage(list, event.target.textContent);
-      // Remove the active class from any other pagination button. Let's try 'for of'
+      // Remove the active class from other pagination buttons. 
       let paginationButtons = linkList.getElementsByTagName('button');
-      //console.log(paginationButtons);
-      // for (const paginationButton of paginationButtons) {
-      //    paginationButton.classList.remove('active');
-      // }
-      // Hmmm, not working. Try traditional for loop.
       for (let i = 0; i < paginationButtons.length; i++) {
          paginationButtons[i].classList.remove('active');
-         
       }
-      // Not working either.
-      // Add the active class to the pagination button that was just clicked. :FIXME need to remove active class from others
+      // Add the active class to the pagination button that was just clicked. 
       event.target.classList.add('active');
    });
 }
 
-// Call functions
-showPage(data,2);
+/* 
+Display a page of students, starting on the first page.
+Pass in the student list which is stored in the variable 'data' from data.js
+'1' is the second argument because we want to start on the first page.
+*/
+showPage(data,1);
+/* Add pagination buttons.*/
 addPaginationButtons(data);
