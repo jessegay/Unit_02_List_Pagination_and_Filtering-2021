@@ -74,12 +74,38 @@ createSearch = () => {
    const searchBarHTML = `<label for="search" class="student-search">
    <span>Search by name</span>
    <input id="search" placeholder="Search by name...">
-   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   <button id="searchButton" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
  </label>`;
    //insert searchBarHTML beforeend of element with the class 'header'.
    let header = document.querySelector('.header');
    header.insertAdjacentHTML('beforeend', searchBarHTML);
+
 }
+
+// Create search function. FIXME: Need to call it somewhere.
+   //create new list based on search matches
+   // variables to store search input, button elements, and filtered list (starts as complete list)
+   
+   // Global variables. FIXME: Move to beginning
+   // search input
+   const search = document.querySelector('#search');
+   // search button
+   const searchButton = document.querySelector('#searchButton');
+   // list of students. Resets by pulling from data, then is filtered within function
+   let filteredList = data;
+
+   // pass in search and filteredList-note that my naming my be confusing, since list is only filtered after function is called
+   const searchFunction = (searchInput, students) => {
+         for (let i = 0; i < students.length; i ++) {
+         if (searchInput.value.length != 0 && students[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            //FIXME: remove students that don't match. Maybe I'm doing this backward.
+         }
+         // call showPage after list has been filtered.
+      }      
+   }
+   
+   // let searchedData = ;
+   // pass this list as an argument into showPage();
 
 
 
