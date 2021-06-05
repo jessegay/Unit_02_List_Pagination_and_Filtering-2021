@@ -68,6 +68,24 @@ const addPaginationButtons = (list) => {
    });
 }
 
+// Extra credit
+//Dynamically create search bar
+createSearch = () => {
+   const searchBarHTML = `<label for="search" class="student-search">
+   <span>Search by name</span>
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+ </label>`;
+   //insert searchBarHTML beforeend of element with the class 'header'.
+   let header = document.querySelector('.header');
+   header.insertAdjacentHTML('beforeend', searchBarHTML);
+}
+
+
+
+
+
+
 /* 
 Display a page of students, starting on the first page.
 Pass in the student list which is stored in the variable 'data' from data.js
@@ -76,3 +94,5 @@ Pass in the student list which is stored in the variable 'data' from data.js
 showPage(data,1);
 /* Add pagination buttons.*/
 addPaginationButtons(data);
+/* Add search bar */
+createSearch();
