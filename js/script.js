@@ -82,32 +82,42 @@ createSearch = () => {
 
 }
 
-// Create search function. FIXME: Need to call it somewhere.
+// Create search function. 
    //create new list based on search matches
-   // variables to store search input, button elements, and filtered list (starts as complete list)
+   // variables to store search input, button elements, and filtered list (starts empty and add student from data when a match occurs.)
    
-   // Global variables. FIXME: Move to beginning
-   // search input
-   const search = document.querySelector('#search');
+   // Global variables. FIXME: Move to beginning?
+   // search input (i.e. this is what we're searching for)
+   const searchInput = document.querySelector('#search');
    // search button
    const searchButton = document.querySelector('#searchButton');
-   // list of students. Resets by pulling from data, then is filtered within function
-   let filteredList = data;
+   // list of students. Starts empty, then matches are added. Should this go INSIDE the searchFunction()?
+   // let filteredList;
 
-   // pass in search and filteredList-note that my naming my be confusing, since list is only filtered after function is called
+   // pass in searchInput and data (data is the list of all students from data.js)
    const searchFunction = (searchInput, students) => {
+      let filteredList;
+         // FIXME: Do I need to clear the list first, e.g. filteredList = [];
          for (let i = 0; i < students.length; i ++) {
-         if (searchInput.value.length != 0 && students[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-            //FIXME: remove students that don't match. Maybe I'm doing this backward.
+            //FIXME: add matches to filteredList
+            // create fullName so loop can check for matches against 1 variable rather than checking first and last separately
+            let fullName = `${students[i].name.first} ${students[i].name.last}`;
+            if (searchInput.value.length != 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
+               filteredList.push(students[i]);      
+            }
          }
          // call showPage after list has been filtered.
+         showPage(filteredList, 9)
       }      
-   }
    
-   // let searchedData = ;
-   // pass this list as an argument into showPage();
-
-
+   
+/*
+Submit listener
+*/  
+// searchButton.addEventListener('click', (event) => {
+//    event.preventDefault();
+//    searchFunction(searchInput, data);
+// });
 
 
 
