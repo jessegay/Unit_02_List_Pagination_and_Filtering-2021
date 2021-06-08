@@ -102,8 +102,10 @@ createSearch();
                console.log(filteredList);//FIXME: filteredList looks right, but showPage() isn't working.       
             }
          }
-         // call showPage after list has been filtered.
-         showPage(filteredList, 9);
+         // call showPage after list has been filtered. Start on the first page.
+         showPage(filteredList, 1);
+         // add pagination buttons based on this new filtered list
+         addPaginationButtons(filteredList);
       }      
 
 /* 
