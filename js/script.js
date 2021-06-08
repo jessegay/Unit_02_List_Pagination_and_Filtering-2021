@@ -79,48 +79,32 @@ createSearch = () => {
    //insert searchBarHTML beforeend of element with the class 'header'.
    let header = document.querySelector('.header');
    header.insertAdjacentHTML('beforeend', searchBarHTML);
-
 }
+/* call function to add search bar to page */
+createSearch();
 
 // Create search function. 
-   //create new list based on search matches
-   // variables to store search input, button elements, and filtered list (starts empty and add student from data when a match occurs.)
-   
-   // Global variables. FIXME: Move to beginning?
+   // Variables to store search input and button elements
    // search input (i.e. this is what we're searching for)
-   const searchInput = document.querySelector('#search');
+   const searchInput = document.querySelector("#search");
    // search button
-   const searchButton = document.querySelector('#searchButton');
-   // list of students. Starts empty, then matches are added. Should this go INSIDE the searchFunction()?
-   // let filteredList;
-
-   // pass in searchInput and data (data is the list of all students from data.js)
+   const searchButton = document.querySelector("#searchButton");
+   console.log(searchButton); //Note: this didn't work when I used single quotes in the argument, e.g. ('#searchButton')
+   
    const searchFunction = (searchInput, students) => {
-      let filteredList;
-         // FIXME: Do I need to clear the list first, e.g. filteredList = [];
+      let filteredList = [];
          for (let i = 0; i < students.length; i ++) {
-            //FIXME: add matches to filteredList
             // create fullName so loop can check for matches against 1 variable rather than checking first and last separately
             let fullName = `${students[i].name.first} ${students[i].name.last}`;
             if (searchInput.value.length != 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
-               filteredList.push(students[i]);      
+               //add matches to filteredList
+               filteredList.push(students[i]);
+               console.log(filteredList);//FIXME: filteredList looks right, but showPage() isn't working.       
             }
          }
          // call showPage after list has been filtered.
-         showPage(filteredList, 9)
+         showPage(filteredList, 9);
       }      
-   
-   
-/*
-Submit listener
-*/  
-// searchButton.addEventListener('click', (event) => {
-//    event.preventDefault();
-//    searchFunction(searchInput, data);
-// });
-
-
-
 
 /* 
 Display a page of students, starting on the first page.
@@ -130,5 +114,12 @@ Pass in the student list which is stored in the variable 'data' from data.js
 showPage(data,1);
 /* Add pagination buttons.*/
 addPaginationButtons(data);
-/* Add search bar */
-createSearch();
+
+/*
+Submit listener
+*/  
+searchButton.addEventListener('click', (event) => {
+   event.preventDefault();
+   searchFunction(searchInput, data);
+   //console.log('Search button is functional');
+});
