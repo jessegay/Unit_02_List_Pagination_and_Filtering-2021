@@ -99,7 +99,29 @@ createSearch();
             if (searchInput.value.length != 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
                //add matches to filteredList
                filteredList.push(students[i]);
-               console.log(filteredList);//FIXME: filteredList looks right, but showPage() isn't working.       
+               console.log(filteredList);     
+            } // if searchInput is empty, display entire list
+            else if (searchInput.value.length == 0) {
+               filteredList = data;
+            } // if no matches, add error to page
+            else if (searchInput.value.length != 0 && !fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            console.log('no results found, error triggered');
+            const noResultsError = `<p class="no-results">No results found</p>`;
+            const listArea = document.querySelector(".student-list");
+            listArea.insertAdjacentHTML('beforeend', noResultsError);
+            console.log(filteredList);
+            /*n
+            I want need to run showPage() but with filteredList being empty, so it removes previous students from page.
+            It's not working. 
+            script.js:56 Uncaught TypeError: Cannot read property 'classList' of undefined
+            at addPaginationButtons (script.js:56)
+            at searchFunction (script.js:119)
+            at HTMLButtonElement.<anonymous> (script.js:136)
+            I think there's a problem with filteredList.
+            Also, the error is being triggered once for every loop cycle. Maybe instead the error should come after the loop.
+            E.g. if the failure branch of the loop is triggered, than the execution cursor jumps back out of the function to the 
+            previous level, and maybe showPage() etc. get called there.
+            */       
             }
          }
          // call showPage after list has been filtered. Start on the first page.
