@@ -40,18 +40,15 @@ const showPage = (list, page) => {
 /*
 showError() for when there are no search matches
 */
-
- const showError = () =>  {
+const showError = () =>  {
    console.log('no results found, error triggered');
    const noResultsError = `<p class="no-results">No results found</p>`;
    const listArea = document.querySelector(".student-list");
+   // clear listArea
    listArea.innerHTML = '';
+   // insert error message
    listArea.insertAdjacentHTML('beforeend', noResultsError);
-   //console.log(filteredList);
    }
-
-
-
 
 /*
 `addPaginationButtons` function
@@ -88,10 +85,10 @@ const addPaginationButtons = (list) => {
 //Dynamically create search bar
 createSearch = () => {
    const searchBarHTML = `<label for="search" class="student-search">
-   <span>Search by name</span>
-   <input id="search" placeholder="Search by name...">
-   <button id="searchButton" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
- </label>`;
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button id="searchButton" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>`;
    //insert searchBarHTML beforeend of element with the class 'header'.
    let header = document.querySelector('.header');
    header.insertAdjacentHTML('beforeend', searchBarHTML);
@@ -102,10 +99,10 @@ createSearch();
 // Create search function. 
    // Variables to store search input and button elements:
    // search input (i.e. this is what we're searching for)
-   const searchInput = document.querySelector("#search");
+   const searchInput = document.querySelector('#search');
    // search button
-   const searchButton = document.querySelector("#searchButton");
-   console.log(searchButton); //FIXME: Note: this didn't work when I used single quotes in the argument, e.g. ('#searchButton'). Test again.
+   const searchButton = document.querySelector('#searchButton');
+   console.log(searchButton); 
    
    const searchFunction = (searchInput, students) => {
       let filteredList = [];
@@ -128,10 +125,11 @@ createSearch();
          showPage(filteredList, 1);
          // add pagination buttons based on this new filtered list
          addPaginationButtons(filteredList);
-         }// else clear student list, show error message, clear pagination buttons (by calling addPaginationButtons when filteredList is empty).
+         }// else show error message
          else {
-            showError();
-            addPaginationButtons(filteredList);
+         showError();
+         // clear pagination buttons (by calling addPaginationButtons when filteredList is empty)
+         addPaginationButtons(filteredList);
          }
       }      
 
