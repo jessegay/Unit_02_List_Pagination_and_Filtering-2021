@@ -38,6 +38,22 @@ const showPage = (list, page) => {
 }
 
 /*
+showError() for when there are no search matches
+*/
+
+ const showError = () =>  {
+   console.log('no results found, error triggered');
+   const noResultsError = `<p class="no-results">No results found</p>`;
+   const listArea = document.querySelector(".student-list");
+   listArea.innerHTML = '';
+   listArea.insertAdjacentHTML('beforeend', noResultsError);
+   //console.log(filteredList);
+   }
+
+
+
+
+/*
 `addPaginationButtons` function
 dynamically creates the pagination buttons at 
 the bottom of the screen based on the number of students in 'list'.
@@ -89,7 +105,7 @@ createSearch();
    const searchInput = document.querySelector("#search");
    // search button
    const searchButton = document.querySelector("#searchButton");
-   console.log(searchButton); //Note: this didn't work when I used single quotes in the argument, e.g. ('#searchButton')
+   console.log(searchButton); //FIXME: Note: this didn't work when I used single quotes in the argument, e.g. ('#searchButton'). Test again.
    
    const searchFunction = (searchInput, students) => {
       let filteredList = [];
@@ -103,33 +119,20 @@ createSearch();
             } // if searchInput is empty, display entire list
             else if (searchInput.value.length == 0) {
                filteredList = data;
-               //FIXME: Can this be moved out of the if statement, so it just short circuits and goes directly to showPage (with filteredList = data(all students))? This would save all the looping iterations.
-            } // if no matches, add error to page
-            else if (searchInput.value.length != 0 && !fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
-            console.log('no results found, error triggered');
-            const noResultsError = `<p class="no-results">No results found</p>`;
-            const listArea = document.querySelector(".student-list");
-            listArea.insertAdjacentHTML('beforeend', noResultsError);
-            console.log(filteredList);
-                        
-            /*
-            The last condition (no matches) isn't working.
-            1.noResultsError isn't appearing on page.
-            2.I don't think my control flow is correct. It's logging the error each iteration of the loop, but I only want to it to log 1 error if the last condition is met after looping through the entire list.
-            3. Also, console shows the following when no matches. 
-            script.js:56 Uncaught TypeError: Cannot read property 'classList' of undefined
-            at addPaginationButtons (script.js:56)
-            at searchFunction (script.js:119)
-            at HTMLButtonElement.<anonymous> (script.js:136)
-            FIXME: Is this because when there are no matches, there are no pagination buttons, so there is nothing to add classList to, etc.? Should I create a conditional for the 0 items condition (e.g. display no pagination buttons)
-            
-            */       
+               //FIXME: Can this be moved out of the if statement, so it just short circuits and goes directly to showPage (with filteredList = data(all students))? This would save all the looping iterations. Try to refactor after I get the basics working.
             }
+            
          }
-         // call showPage after list has been filtered. This will display only matching results. Start on the first page.
+         // if filteredList.length > 0(no matches), call showPage after list has been filtered. This will display only matching results. Start on the first page.
+         if (filteredList.length > 0) {
          showPage(filteredList, 1);
          // add pagination buttons based on this new filtered list
          addPaginationButtons(filteredList);
+         }// else clear student list, show error message. Can I pack this in a function?
+         else {
+            showError();
+            //FIXME: clear pagination buttons
+            }
       }      
 
 /* 
