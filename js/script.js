@@ -84,7 +84,7 @@ createSearch = () => {
 createSearch();
 
 // Create search function. 
-   // Variables to store search input and button elements
+   // Variables to store search input and button elements:
    // search input (i.e. this is what we're searching for)
    const searchInput = document.querySelector("#search");
    // search button
@@ -97,12 +97,13 @@ createSearch();
             // create fullName so loop can check for matches against 1 variable rather than checking first and last separately
             let fullName = `${students[i].name.first} ${students[i].name.last}`;
             if (searchInput.value.length != 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
-               //add matches to filteredList
+               //add matches to filteredList. 
                filteredList.push(students[i]);
                console.log(filteredList);     
             } // if searchInput is empty, display entire list
             else if (searchInput.value.length == 0) {
                filteredList = data;
+               //FIXME: Can this be moved out of the if statement, so it just short circuits and goes directly to showPage (with filteredList = data(all students))? This would save all the looping iterations.
             } // if no matches, add error to page
             else if (searchInput.value.length != 0 && !fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
             console.log('no results found, error triggered');
@@ -110,21 +111,22 @@ createSearch();
             const listArea = document.querySelector(".student-list");
             listArea.insertAdjacentHTML('beforeend', noResultsError);
             console.log(filteredList);
-            /*n
-            I want need to run showPage() but with filteredList being empty, so it removes previous students from page.
-            It's not working. 
+                        
+            /*
+            The last condition (no matches) isn't working.
+            1.noResultsError isn't appearing on page.
+            2.I don't think my control flow is correct. It's logging the error each iteration of the loop, but I only want to it to log 1 error if the last condition is met after looping through the entire list.
+            3. Also, console shows the following when no matches. 
             script.js:56 Uncaught TypeError: Cannot read property 'classList' of undefined
             at addPaginationButtons (script.js:56)
             at searchFunction (script.js:119)
             at HTMLButtonElement.<anonymous> (script.js:136)
-            I think there's a problem with filteredList.
-            Also, the error is being triggered once for every loop cycle. Maybe instead the error should come after the loop.
-            E.g. if the failure branch of the loop is triggered, than the execution cursor jumps back out of the function to the 
-            previous level, and maybe showPage() etc. get called there.
+            FIXME: Is this because when there are no matches, there are no pagination buttons, so there is nothing to add classList to, etc.? Should I create a conditional for the 0 items condition (e.g. display no pagination buttons)
+            
             */       
             }
          }
-         // call showPage after list has been filtered. Start on the first page.
+         // call showPage after list has been filtered. This will display only matching results. Start on the first page.
          showPage(filteredList, 1);
          // add pagination buttons based on this new filtered list
          addPaginationButtons(filteredList);
