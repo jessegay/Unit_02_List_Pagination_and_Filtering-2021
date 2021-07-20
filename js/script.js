@@ -128,11 +128,11 @@ createSearch();
          showPage(filteredList, 1);
          // add pagination buttons based on this new filtered list
          addPaginationButtons(filteredList);
-         }// else clear student list, show error message. Can I pack this in a function?
+         }// else clear student list, show error message, clear pagination buttons (by calling addPaginationButtons when filteredList is empty).
          else {
             showError();
-            //FIXME: clear pagination buttons
-            }
+            addPaginationButtons(filteredList);
+         }
       }      
 
 /* 
