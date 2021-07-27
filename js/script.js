@@ -69,17 +69,40 @@ const addPaginationButtons = (list) => {
    // Add 'active' class to first button to show it is selected upon inital load.
    linkList.getElementsByTagName('button')[0].classList.add('active');
    
-   // Add event listener to all pagination buttons. I'm using event delegation, rather than doing each one individually.
-   linkList.addEventListener("click", event => {
-      showPage(list, event.target.textContent);
-      // Remove the active class from other pagination buttons. 
-      let paginationButtons = linkList.getElementsByTagName('button');
-      for (let i = 0; i < paginationButtons.length; i++) {
-         paginationButtons[i].classList.remove('active');
-      }
-      // Add the active class to the pagination button that was just clicked. 
-      event.target.classList.add('active');
-   });
+   // Add event listener to all pagination buttons. 
+   
+   let linkChildren = linkList.childNodes;
+   for (let i = 0; i < linkChildren.length; i++) {
+      let pageLi = linkChildren[i];
+      pageLi.addEventListener("click", event => {
+         showPage(list, event.target.textContent);
+         // Remove the active class from other pagination buttons. 
+         let paginationButtons = linkList.getElementsByTagName('button');
+         for (let i = 0; i < paginationButtons.length; i++) {
+            paginationButtons[i].classList.remove('active');
+         }
+         // Add the active class to the pagination button that was just clicked. 
+         event.target.classList.add('active');
+         //temp log statement to find what was clicked
+         console.log(event.target.textContent);
+      });
+   }
+   
+   // 93-105 almost works, but applies it to the entire ul as well, so clicking outside the individual buttons triggers odd behavior. FIXME: Delete
+   // linkList.addEventListener("click", event => {
+   //    showPage(list, event.target.textContent);
+   //    // Remove the active class from other pagination buttons. 
+   //    let paginationButtons = linkList.getElementsByTagName('button');
+   //    for (let i = 0; i < paginationButtons.length; i++) {
+   //       paginationButtons[i].classList.remove('active');
+   //    }
+   //    // Add the active class to the pagination button that was just clicked. 
+   //    event.target.classList.add('active');
+   //    //temp log statement to find what was clicked
+   //    console.log(event.target.textContent);
+   // });
+
+
 }
 
 // Extra credit
