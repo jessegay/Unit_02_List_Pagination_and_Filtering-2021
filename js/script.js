@@ -2,6 +2,7 @@
 Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering (Refresh 2021)
 by Jesse Gay
+I am attempting to get an "Exceeds Expectations" grade.
 */
 
 // Global variables
@@ -12,7 +13,7 @@ this with one edit.*/
 /*
 `showPage` function
 This function will show a page of students selected from the list in the data.js file.
-The number of students per page is defined in on line in itemsPerPage.
+The number of students per page is defined in itemsPerPage.
 */
 
 const showPage = (list, page) => {
@@ -116,11 +117,11 @@ createSearch();
             } // if searchInput is empty, display entire list
             else if (searchInput.value.length == 0) {
                filteredList = data;
-               //FIXME: Can this be moved out of the if statement, so it just short circuits and goes directly to showPage (with filteredList = data(all students))? This would save all the looping iterations. Try to refactor after I get the basics working.
             }
             
          }
-         // if filteredList.length > 0(no matches), call showPage after list has been filtered. This will display only matching results. Start on the first page.
+
+         // if filteredList.length > 0, call showPage after list has been filtered. This will display only matching results. Start on the first page.
          if (filteredList.length > 0) {
          showPage(filteredList, 1);
          // add pagination buttons based on this new filtered list
@@ -148,5 +149,4 @@ Submit listener
 searchButton.addEventListener('click', (event) => {
    event.preventDefault();
    searchFunction(searchInput, data);
-   //console.log('Search button is functional');
 });
