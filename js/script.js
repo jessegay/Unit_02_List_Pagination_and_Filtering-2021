@@ -66,14 +66,15 @@ const addPaginationButtons = (list) => {
       </li>`;
       linkList.insertAdjacentHTML("beforeend", buttonsListItem);
    }
-   // Add 'active' class to first button to show it is selected upon inital load.
+   // Add 'active' class to first button to show it is selected upon inital load. FIXME: This causes "script.js:70 Uncaught TypeError: Cannot read property 'classList' of undefined" I think bc there is no button to set active when search results are null
    linkList.getElementsByTagName('button')[0].classList.add('active');
    
    // Add event listener to all pagination buttons. 
    
    let linkChildren = linkList.childNodes;
    for (let i = 0; i < linkChildren.length; i++) {
-      let pageLi = linkChildren[i];
+      let pageLi = linkChildren[i].firstElementChild;
+      console.log(pageLi);
       pageLi.addEventListener("click", event => {
          showPage(list, event.target.textContent);
          // Remove the active class from other pagination buttons. 
